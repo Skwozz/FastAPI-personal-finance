@@ -1,0 +1,21 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+.env
+
+# Database files
+*.db
+
+# PyCharm, VSCode etc
+.idea/
+.vscode/
+
+# Alembic
+alembic/versions/
+
+# System
+.DS_Store
