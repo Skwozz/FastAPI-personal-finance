@@ -22,3 +22,6 @@ class CategoryRead(CategoryBase):
     user_id:int
 
     model_config = {'from_attributes': True}
+
+class CategoryUpdate(CategoryBase):
+    pass

@@ -13,3 +13,10 @@ class TransactionRead(TransactionsBase):
     user_id:int
 
     model_config = {'from_attributes':True}
+
+class TransactionUpdate(TransactionsBase):
+    amount: float
+    description: str | None = None
+    date: datetime
+    category_id: int
+
