@@ -24,6 +24,7 @@ async def update_transactions(session: AsyncSession,transactions_id:int, user_id
         select(models.Transaction).where(
             models.Transaction.id == transactions_id,
             models.Transaction.user_id == user_id,
+            models.Transaction.is_deleted == False
         )
     )
     transaction = result.scalars().first()
@@ -42,13 +43,13 @@ async def delete_transactions(session: AsyncSession,transactions_id:int, user_id
         select(models.Transaction).where(
             models.Transaction.id == transactions_id,
             models.Transaction.user_id == user_id,
+            models.Transaction.is_deleted == False
         )
     )
     transaction = result.scalars().first()
     if not transaction:
         return False
-
-    await session.delete(transaction)
+    transaction.is_deleted =True
     await session.commit()
-    return transaction
+    return True
 

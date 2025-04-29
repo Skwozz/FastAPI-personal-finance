@@ -45,7 +45,7 @@ async def login_with_access_token(
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail= 'Ошибка в пароле или логине',
-            headers={'WWW-Aunthenticate':'Bearer'},
+            headers={'WWW-Authenticate': 'Bearer'},
         )
     access_token = create_access_token(data={'sub':user.username})
     return {'access_token':access_token,'token_type':'bearer'}

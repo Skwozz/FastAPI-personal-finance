@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Enum, DateTime, Float
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Enum, DateTime, Float
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from .database import Base
@@ -41,6 +41,7 @@ class Transaction(Base):
     date = Column(DateTime, default=datetime.utcnow)
     category_id = Column(Integer, ForeignKey("categories.id"))
     user_id = Column(Integer, ForeignKey('users.id'))
+    is_deleted = Column(Boolean,default=False)
 
     category = relationship("Category", back_populates='transactions')
     user = relationship('User', back_populates='transactions')

@@ -25,19 +25,22 @@ async def read_users_me(
     categories_count, transactions_count = await asyncio.gather(
         session.scalar(select(func.count(models.Category.id)).where(models.Category.user_id == current_user.id)),
 
-        session.scalar(select(func.count(models.Transaction.id)).where(models.Transaction.user_id == current_user.id)))
+        session.scalar(select(func.count(models.Transaction.id)).where(models.Transaction.user_id == current_user.id,
+                                                                        models.Transaction.is_deleted == False)))
 
     income_sum, expense_sum = await asyncio.gather(
         session.scalar
         (select(func.coalesce(func.sum(models.Transaction.amount), 0)).
          join(models.Category)
          .where(models.Transaction.user_id == current_user.id,
-                models.Category.type == 'INCOME')),
+                models.Category.type == 'INCOME',
+                models.Transaction.is_deleted == False)),
         session.scalar
         (select(func.coalesce(func.sum(models.Transaction.amount), 0))
         .join(models.Category)
         .where(models.Transaction.user_id == current_user.id,
-               models.Category.type == 'EXPENSE')))
+               models.Category.type == 'EXPENSE',
+                models.Transaction.is_deleted == False)))
 
     return schemas_user.UserMe(
         id=current_user.id,
