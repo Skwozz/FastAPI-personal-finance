@@ -79,7 +79,7 @@ async def update_transactions(
 
     return transaction
 
-@router.delete("/transactions/{transactions_id}", status_code= status.HTTP_204_NO_CONTENT )
+@router.delete("/transactions/{transaction_id}", status_code= status.HTTP_204_NO_CONTENT )
 async def delete_transactions(
         transaction_id: int,
         session: AsyncSession = Depends(get_session),

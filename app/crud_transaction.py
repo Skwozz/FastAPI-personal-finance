@@ -38,10 +38,10 @@ async def update_transactions(session: AsyncSession,transactions_id:int, user_id
     return transaction
 
 
-async def delete_transactions(session: AsyncSession,transactions_id:int, user_id:int):
+async def delete_transactions(session: AsyncSession,transaction_id:int, user_id:int):
     result = await session.execute(
         select(models.Transaction).where(
-            models.Transaction.id == transactions_id,
+            models.Transaction.id == transaction_id,
             models.Transaction.user_id == user_id,
             models.Transaction.is_deleted == False
         )
