@@ -1,16 +1,16 @@
 from fastapi import FastAPI
-from .routers import categories, users, transactions, auth
-import os
-from app.routers import celery_router, task_router, pdf_report, notify
+from .routers import categories, users, transactions, auth, celery_email_pdf
+from app.routers import celery_routes, celery_pdf, celery_email
 
 app = FastAPI()
 
 print("✅ DATABASE_URL = ", os.getenv("DATABASE_URL"))
 
-app.include_router(notify.router)
-app.include_router(pdf_report.router)
-app.include_router(task_router.router)
-app.include_router(celery_router.router)
+app.include_router(celery_email_pdf.router)
+app.include_router(celery_email.router)
+app.include_router(celery_pdf.router)
+app.include_router(celery_routes.router)
+
 app.include_router(categories.router)
 app.include_router(users.router)
 app.include_router(transactions.router)
