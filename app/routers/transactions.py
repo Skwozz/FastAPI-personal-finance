@@ -2,15 +2,12 @@ from fastapi import APIRouter, Depends, HTTPException,Query, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_session
-from app import schemas_transaction, crud_transaction
+from app.crud import crud_transaction
+from app.schemas import schemas_transaction
 from app.routers.auth import get_current_user
 from app.models import User
 from app import models
 from enum import Enum
-from  typing import List
-
-
-
 
 router = APIRouter()
 
@@ -86,7 +83,7 @@ async def delete_transactions(
         current_user: User = Depends(get_current_user),
 
 ):
-    transaction = await crud_transaction.delete_transactions(session, transaction_id,current_user.id)
+    transaction = await crud_transaction.delete_transactions(session, transaction_id, current_user.id)
     if not transaction:
         raise HTTPException(status_code=404, detail='Транзакция не найдена')
 

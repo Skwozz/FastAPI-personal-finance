@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
-from .auth import get_current_user
+from app.routers.auth import get_current_user
 from app.models import User
-from app.tasks import send_email_task
+from app.tasks.send_email import send_email_task
 
 router = APIRouter(prefix="/celery", tags=["celery"])
 

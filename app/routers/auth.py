@@ -1,12 +1,12 @@
 import datetime
-from fastapi import APIRouter, Depends, HTTPException, status, Security
+from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from app.database import get_session
-from app import crud_user, schemas_user, models
-
+from app.crud import crud_user
+from app.schemas import schemas_user
 
 SECRET_KEY = 'your-secret-key'
 ALGORITHM = 'HS256'
@@ -35,7 +35,7 @@ async def authenticate_user(session: AsyncSession, username:str, password:str):
         return False
     return user
 
-@router.post('/token',response_model=schemas_user.Token)
+@router.post('/token', response_model=schemas_user.Token)
 async def login_with_access_token(
         form_data: OAuth2PasswordRequestForm = Depends(),
         session: AsyncSession = Depends(get_session),
@@ -66,7 +66,7 @@ async def get_current_user(
             raise credentials_excxception
     except JWTError:
         raise  credentials_excxception
-    user = await crud_user.get_user_by_username(session,username)
+    user = await crud_user.get_user_by_username(session, username)
     if user is None:
         raise credentials_excxception
     return user

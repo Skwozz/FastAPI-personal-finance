@@ -1,7 +1,7 @@
 import pytest
 from httpx import AsyncClient, ASGITransport
 from app.database import Base, test_engine
-from app.test_app import create_test_app
+from tests.test_app import create_test_app
 
 @pytest.mark.asyncio
 async def test_full_flow():

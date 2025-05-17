@@ -1,6 +1,11 @@
 from fastapi import FastAPI
-from .routers import categories, users, transactions, auth, celery_email_pdf
-from app.routers import celery_routes, celery_pdf, celery_email
+
+from .routers import categories, users, transactions, auth
+from app.routers import celery_routes
+from .routers.reports import celery_email, celery_email_pdf, celery_pdf
+
+app = FastAPI()
+
 
 app = FastAPI()
 

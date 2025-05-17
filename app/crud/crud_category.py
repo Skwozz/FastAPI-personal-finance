@@ -1,7 +1,8 @@
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from app import models, schemas_category
+from app import models
+from app.schemas import schemas_category
 
 
 async def get_categories(session: AsyncSession, user_id:int):

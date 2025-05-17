@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_session
-from app import crud_category, schemas_category
+from app.crud import crud_category
+from app.schemas import schemas_category
 from app.routers.auth import get_current_user
 from app.models import User
 router = APIRouter()
@@ -28,7 +29,7 @@ async def delete_categories(
         session: AsyncSession = Depends(get_session),
         current_user: User = Depends(get_current_user)
 ):
-    category = await crud_category.delete_category(session,category_id,current_user.id)
+    category = await crud_category.delete_category(session, category_id, current_user.id)
     if not category:
         raise HTTPException(status_code=404, detail='Категория не найдена')
 

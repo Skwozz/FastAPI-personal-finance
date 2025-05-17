@@ -5,7 +5,7 @@ from app.models import Transaction
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_session
 from app.routers.auth import get_current_user
-from app.tasks import send_financial_report_email
+from app.tasks.send_report_email import send_financial_report_email
 
 
 router = APIRouter(prefix="/celery", tags=["celery"])
