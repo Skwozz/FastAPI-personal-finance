@@ -1,40 +1,11 @@
-import os
 import smtplib
-from datetime import datetime
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
-from reportlab.pdfgen import canvas
-
 from app.settings import settings
-from .celery import celery_app
-from .utils.email_generator import send_email
+from app.celery import celery_app
 
 
-@celery_app.task
-def test_add(x: int, y: int) -> int:
-    return x + y
-
-@celery_app.task
-def write_to_file(content: str):
-    with open("output.txt", "a") as f:
-        f.write(f"[{datetime.now()}] {content}\n")
-
-@celery_app.task
-def generate_pdf_report(username: str) -> str:
-    output_path = f'generate_reports/{username}.pdf'
-    os.makedirs('generate_reports',exist_ok=True)
-    c = canvas.Canvas(output_path)
-    # c.drawString(100,750, f'Отчет для пользователя {username}')
-    # c.drawString(100,750, 'Спасибо за использование нашего сервиса!')
-    c.save()
-    return  output_path
-
-
-@celery_app.task
-def send_email_task(to_email: str, subject: str, message: str):
-    return send_email(to_email,subject,message)
 
 @celery_app.task
 def send_financial_report_email(to_email: str, transactions: list[dict]):

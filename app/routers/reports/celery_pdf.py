@@ -1,5 +1,3 @@
-from time import strftime
-
 from fastapi import APIRouter, Depends
 from fastapi.responses import FileResponse
 from sqlalchemy.ext.asyncio import AsyncSession

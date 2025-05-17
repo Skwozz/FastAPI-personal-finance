@@ -1,9 +1,10 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from app import models,schemas_transaction
+from app import models
+from app.schemas import schemas_transaction
 
 
-async def create_transactions(session: AsyncSession,  transaction: schemas_transaction.TransactionCreate,user_id:int):
+async def create_transactions(session: AsyncSession, transaction: schemas_transaction.TransactionCreate, user_id:int):
     db_transaction = models.Transaction(
         amount=transaction.amount,
         date=transaction.date,
